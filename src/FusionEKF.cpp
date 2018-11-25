@@ -123,9 +123,9 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
   float noise_ay = 9;
 
   // process covariance matrix Q initialization with noise
-  float elapsed_time_4 = pow(elapsed_time, 4)
-  float elapsed_time_3 = pow(elapsed_time, 3)
-  float elapsed_time_2 = pow(elapsed_time, 2)
+  float elapsed_time_4 = pow(elapsed_time, 4);
+  float elapsed_time_3 = pow(elapsed_time, 3);
+  float elapsed_time_2 = pow(elapsed_time, 2);
 
   ekf_.Q_ = MatrixXd(4, 4);
   ekf_.Q_ << elapsed_time_4 / 4 * noise_ax, 0, elapsed_time_3 / 2 * noise_ax, 0,

@@ -21,50 +21,22 @@ void KalmanFilter::Init(VectorXd &x_in, MatrixXd &P_in, MatrixXd &F_in,
 }
 
 void KalmanFilter::Predict() {
-  x_ = F_ * x_;
-  MatrixXd Ft = F_.transpose();
-  P_ = F_ * P_ * Ft + Q_;
+  /**
+  TODO:
+    * predict the state
+  */
 }
 
 void KalmanFilter::Update(const VectorXd &z) {
-  VectorXd z_pred = H_ * x_;
-  VectorXd y = z - z_pred;
-  MatrixXd Ht = H_.transpose();
-  MatrixXd S = H_ * P_ * Ht + R_;
-  MatrixXd Si = S.inverse();
-  MatrixXd PHt = P_ * Ht;
-  MatrixXd K = PHt * Si;
-
-  // new estimate
-  x_ = x_ * (K * y);
-  long x_size = x_.size();
-  MatrixXd I = MatrixXd::Identity(x_size, x_size);
-  P_ = (I - K * H_) * P_;
+  /**
+  TODO:
+    * update the state by using Kalman Filter equations
+  */
 }
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
-  float px = x_[0];
-  float py = x_[1];
-  float vx = x_[2];
-  float vy = x_[3];
-
-  float p = sqrt(px * px + py * py);
-
-  VectorXd hx = VectorXd(3);
-  hx << p, atan2(py, px), (px * vx + py * vy) / p;
-  VectorXd y = z - hx;
-  while (y(1) > PI) {
-    y(1) -= 2 * PI;
-  }
-  while (y(1) < -PI) {
-    y(1) += 2 * PI;
-  }
-  MatrixXd S = H_ * P_ * H_.transpose() + R_;
-  MatrixXd K = P_ * H_.transpose() * S.inverse();
-
-  // new estimate
-  x_ = x_ + K * y;
-  long x_size = x_.size();
-  MatrixXd I = MatrixXd::Identity(x_size, x_size);
-  P_ = (I - K * H_) * P_;
+  /**
+  TODO:
+    * update the state by using Extended Kalman Filter equations
+  */
 }
