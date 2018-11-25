@@ -27,7 +27,7 @@ void KalmanFilter::Predict() {
 
 void KalmanFilter::Update(const VectorXd &z) {
   VectorXd y = z - H_ * x_;
-  MatrixXd S = H_ * P_ * H.transpose() + R_;
+  MatrixXd S = H_ * P_ * H_.transpose() + R_;
   MatrixXd K = P_ * H_.transpose() * S.inverse();
   
   // new estimate
@@ -36,6 +36,8 @@ void KalmanFilter::Update(const VectorXd &z) {
   MatrixXd I = MatrixXd::Identity(x_size, x_size);
   P_ = (I - K * H_) * P_;
 }
+
+const float PI = 3.1415927;
 
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
   float px = x_[0];
