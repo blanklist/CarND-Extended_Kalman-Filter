@@ -37,8 +37,6 @@ void KalmanFilter::Update(const VectorXd &z) {
   P_ = (I - K * H_) * P_;
 }
 
-const float PI = 3.1415927;
-
 void KalmanFilter::UpdateEKF(const VectorXd &z) {
   float px = x_[0];
   float py = x_[1];
@@ -49,11 +47,11 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   VectorXd hx = VectorXd(3);
   hx << p, atan2(py, px), (px * vx + py * vy) / p;
   VectorXd y = z - hx;
-  while (y(1) > PI) {
-    y(1) -= 2 * PI;
+  while (y(1) > 3.1415927) {
+    y(1) -= 2 * 3.1415927;
   }
-  while (y(1) < -PI) {
-    y(1) += 2 * PI;
+  while (y(1) < -3.1415927) {
+    y(1) += 2 * 3.1415927;
   }
   MatrixXd S = H_ * P_ * H_.transpose() + R_;
   MatrixXd K = P_ * H_.transpose() * S.inverse();
